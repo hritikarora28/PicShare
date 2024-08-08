@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PicShare</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">PicShare Gallery</h1>
+        <a href="/upload" class="btn btn-success mb-4">Upload Photo</a>
+        <div class="row gallery">
+            <% photos.forEach(photo => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="<%= photo.imagePath %>" class="card-img-top" alt="<%= photo.title %>">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= photo.title %></h5>
+                            <p class="card-text"><%= photo.description %></p>
+                            <form action="/delete/<%= photo._id %>" method="POST" class="d-inline">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <% if (currentPage > 1) { %>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<%= currentPage - 1 %>">Previous</a>
+                    </li>
+                <% } %>
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                    <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                        <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                    </li>
+                <% } %>
+                <% if (currentPage < totalPages) { %>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<%= currentPage + 1 %>">Next</a>
+                    </li>
+                <% } %>
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>
+
+
+
+
